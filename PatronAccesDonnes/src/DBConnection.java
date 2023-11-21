@@ -5,6 +5,9 @@ import java.util.Properties;
 
 public class DBConnection {
     private static Connection connection;
+    private static String userName, password, serverName, portNumber;
+    private static String dbName = "testpersonne";
+
     private DBConnection() throws SQLException {
         // variables a modifier en fonction de la base
         String userName = "root";
@@ -14,7 +17,7 @@ public class DBConnection {
         String portNumber = "3306";
 
         // iL faut une base nommee testPersonne !
-        String dbName = "testpersonne";
+        String dbName = DBConnection.dbName;
 
         // creation de la connection
         Properties connectionProps = new Properties();
@@ -24,14 +27,20 @@ public class DBConnection {
         urlDB += portNumber + "/" + dbName;
         DBConnection.connection = DriverManager.getConnection(urlDB, connectionProps);
     }
-    public Connection getConncetion(){
-        return this.connection;
-    }
-    public static Connection getInstance() throws SQLException {
+    public static synchronized Connection getConnection() throws SQLException {
             if (DBConnection.connection == null)
                 new DBConnection();
 
             return DBConnection.connection;
+    }
+    public static synchronized void setNomDB(String nomDB) throws SQLException {
+        if(nomDB!=null && !nomDB.equals(DBConnection.dbName)){
+            DBConnection.dbName=nomDB;
+            DBConnection.connection=null;
         }
+    }
 
+    public static String getDbName() {
+        return DBConnection.dbName;
+    }
 }
