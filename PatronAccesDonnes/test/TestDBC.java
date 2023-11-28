@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -5,7 +6,11 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class test {
+public class TestDBC {
+    @BeforeEach
+    public void before() throws SQLException {
+        DBConnection.setNomDB("testpersonne");
+    }
     @Test
     public void test_multiple_connection() throws SQLException {
         Connection c1 = DBConnection.getConnection();

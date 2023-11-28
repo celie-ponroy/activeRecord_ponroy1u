@@ -15,7 +15,7 @@ public class PrincipaleJDBC {
 		String tableName = "personne";
 
 		Connection connect = DBConnection.getConnection();
-
+/*
 		// creation de la table Personne
 		{
 			String createString = "CREATE TABLE Personne ( " + "ID INTEGER  AUTO_INCREMENT, "
@@ -58,9 +58,9 @@ public class PrincipaleJDBC {
 			System.out.println(autoInc);
 			System.out.println();
 		}
-
+*/
 		// recuperation de toutes les personnes + affichage
-		{
+		{/*
 			System.out.println("4) Recupere les personnes de la table Personne");
 			String SQLPrep = "SELECT * FROM Personne;";
 			PreparedStatement prep1 = connect.prepareStatement(SQLPrep);
@@ -73,9 +73,14 @@ public class PrincipaleJDBC {
 				int id = rs.getInt("id");
 				System.out.println("  -> (" + id + ") " + nom + ", " + prenom);
 			}
-			System.out.println();
-		}
+			System.out.println();*/
+			System.out.println("FIND ALL");
+			for (Personne p : Personne.findAll()) {
+				System.out.println(p);
+			}
 
+		}
+/*
 		// suppression de la personne 1
 		{
 			PreparedStatement prep = connect.prepareStatement("DELETE FROM Personne WHERE id=?");
@@ -83,26 +88,15 @@ public class PrincipaleJDBC {
 			prep.execute();
 			System.out.println("5) Suppression personne id 1 (Spielberg)");
 			System.out.println();
-		}
+		}*/
 
 		// recuperation de la seconde personne + affichage
 		{
-			System.out.println("6) Recupere personne d'id 2");
-			String SQLPrep = "SELECT * FROM Personne WHERE id=?;";
-			PreparedStatement prep1 = connect.prepareStatement(SQLPrep);
-			prep1.setInt(1, 2);
-			prep1.execute();
-			ResultSet rs = prep1.getResultSet();
-			// s'il y a un resultat
-			if (rs.next()) {
-				String nom = rs.getString("nom");
-				String prenom = rs.getString("prenom");
-				int id = rs.getInt("id");
-				System.out.println("  -> (" + id + ") " + nom + ", " + prenom);
-			}
 			System.out.println();
+			System.out.println(Personne.findById(2));
+			System.out.println(Personne.findById(6));
 		}
-
+/*
 		// met a jour personne 2
 		{
 			String SQLprep = "update Personne set nom=?, prenom=? where id=?;";
@@ -140,6 +134,7 @@ public class PrincipaleJDBC {
 			stmt.executeUpdate(drop);
 			System.out.println("9) Supprime table Personne");
 		}*/
+		System.out.println(Personne.findByName("Fincher"));
 
 	}
 
